@@ -216,4 +216,42 @@
 
       document.getElementById('woTrays').textContent = trays.toLocaleString();
       document.getElementById('woLoose6packs').textContent = individual6.toLocaleString();
-      document.getElementById('recordTrays').
+      document.getElementById('recordTrays').textContent = trays.toLocaleString();
+      document.getElementById('record6packs').textContent = total6Packs.toLocaleString();
+      document.getElementById('recordBottles').textContent = totalBottles.toLocaleString();
+    });
+
+    // --- SINGLE ORDER CALCULATION ---
+    document.getElementById('calcSingleBtn').addEventListener('click', function() {
+      const layersS = parseInt(document.getElementById('layersS').value) || 0;
+      const extraTraysS = parseInt(document.getElementById('extraTraysS').value) || 0;
+      const individualS = parseInt(document.getElementById('indS').value) || 0;
+
+      const traysS = (layersS * 7) + extraTraysS;
+      const totalSingles = traysS * 42;
+      const totalBottlesS = totalSingles * 1; 
+
+      document.getElementById('woTraysS').textContent = traysS.toLocaleString();
+      document.getElementById('woLooseSingles').textContent = individualS.toLocaleString();
+      document.getElementById('recordTraysS').textContent = traysS.toLocaleString();
+      document.getElementById('recordSingles').textContent = totalSingles.toLocaleString();
+      document.getElementById('recordBottlesS').textContent = totalBottlesS.toLocaleString();
+    });
+
+    // --- WORKS ORDER QUANTITY CALCULATION ---
+    document.getElementById('calcWoQtyBtn').addEventListener('click', function() {
+      const orderQty = parseInt(document.getElementById('orderQty').value) || 0;
+      const orderType = document.getElementById('orderType').value;
+      let traysRequired;
+
+      if (orderType === '6pack') {
+        traysRequired = Math.ceil(orderQty / 42);  // 6 Packs per tray
+      } else {
+        traysRequired = Math.ceil(orderQty / 1); // Singles per tray
+      }
+
+      document.getElementById('woTraysQty').textContent = traysRequired.toLocaleString();
+    });
+  </script>
+</body>
+</html>
