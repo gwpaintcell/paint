@@ -112,9 +112,6 @@
     <label for="layers">Number of Layers Completed:</label>
     <input type="number" id="layers" min="0" value="0" />
 
-    <label for="extraTrays">Extra Trays (not forming a full layer):</label>
-    <input type="number" id="extraTrays" min="0" value="0" />
-
     <label for="ind6">Individual 6 Packs (Loose):</label>
     <input type="number" id="ind6" min="0" value="0" />
 
@@ -204,10 +201,9 @@
     // --- 6 PACK ORDER CALCULATION ---
     document.getElementById('calcBtn').addEventListener('click', function() {
       const layers = parseInt(document.getElementById('layers').value) || 0;
-      const extraTrays = parseInt(document.getElementById('extraTrays').value) || 0;
       const individual6 = parseInt(document.getElementById('ind6').value) || 0;
 
-      const trays = (layers * 7) + extraTrays;
+      const trays = layers * 7;
       const total6Packs = trays * 42;
       const totalBottles = total6Packs * 6;
 
@@ -221,12 +217,11 @@
     // --- SINGLE ORDER CALCULATION ---
     document.getElementById('calcSingleBtn').addEventListener('click', function() {
       const layersS = parseInt(document.getElementById('layersS').value) || 0;
-      const extraTraysS = parseInt(document.getElementById('extraTraysS').value) || 0;
       const individualS = parseInt(document.getElementById('indS').value) || 0;
 
-      const traysS = (layersS * 7) + extraTraysS;
+      const traysS = layersS * 7;
       const totalSingles = traysS * 140;
-      const totalBottlesS = totalSingles * 1;
+      const totalBottlesS = totalSingles;
 
       document.getElementById('woTraysS').textContent = traysS.toLocaleString();
       document.getElementById('woLooseSingles').textContent = individualS.toLocaleString();
@@ -242,7 +237,7 @@
       let traysRequired;
 
       if (orderType === '6pack') {
-        traysRequired = Math.ceil(orderQty / 42);  // 6 Packs per tray
+        traysRequired = Math.ceil(orderQty / 42);  // 42 x 6-packs per tray
       } else {
         traysRequired = Math.ceil(orderQty / 140); // 140 singles per tray
       }
