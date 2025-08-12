@@ -1,249 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Production Calculator</title>
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Production Calculator</title>
+<style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
-      margin: 20px;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #222;
+        color: #fff;
     }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
     .tabs {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
+        display: flex;
+        cursor: pointer;
+        background-color: #333;
     }
-
-    .tabs button {
-      padding: 10px 20px;
-      margin: 0 5px;
-      border: none;
-      background: #555;
-      color: white;
-      cursor: pointer;
-      border-radius: 4px 4px 0 0;
-      font-weight: bold;
+    .tab {
+        flex: 1;
+        padding: 10px;
+        text-align: center;
+        background-color: #333;
+        border-bottom: 2px solid transparent;
     }
-
-    .tabs button.active {
-      background: #007bff;
+    .tab.active {
+        border-bottom: 2px solid #f90;
+        background-color: #444;
     }
-
     .tab-content {
-      display: none;
-      background: white;
-      padding: 20px;
-      border-radius: 0 8px 8px 8px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-      max-width: 500px;
-      margin: 0 auto 40px auto;
+        display: none;
+        padding: 20px;
     }
-
     .tab-content.active {
-      display: block;
+        display: block;
     }
-
     label {
-      display: block;
-      margin: 10px 0 5px;
+        display: block;
+        margin-top: 10px;
     }
-
-    input[type="number"],
-    select {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 20px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+    input {
+        padding: 5px;
+        width: 100%;
+        margin-top: 5px;
     }
-
     button {
-      padding: 10px 20px;
-      background: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 4px;
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #f90;
+        border: none;
+        cursor: pointer;
+        width: 100%;
     }
-
-    button:hover {
-      background: #0056b3;
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
     }
-
-    .result-section {
-      margin-top: 30px;
-      padding: 20px;
-      background: #f9f9f9;
-      border-radius: 6px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    th, td {
+        border: 1px solid #555;
+        padding: 8px;
+        text-align: center;
     }
-
-    .result-section h3 {
-      margin-bottom: 15px;
+    th {
+        background-color: #333;
     }
-
-    .result-section p {
-      font-size: 1.1rem;
-    }
-  </style>
+</style>
 </head>
 <body>
 
-  <h1>Production Calculator</h1>
+<div class="tabs">
+    <div class="tab active" onclick="openTab(event, 'sixPack')">6 Pack Order Calculator</div>
+    <div class="tab" onclick="openTab(event, 'singles')">Singles Order Calculator</div>
+</div>
 
-  <div class="tabs" role="tablist" aria-label="Calculator Tabs">
-    <button class="active" role="tab" aria-selected="true" aria-controls="tab-6pack" id="tabBtn-6pack" tabindex="0">6 Pack Orders</button>
-    <button role="tab" aria-selected="false" aria-controls="tab-single" id="tabBtn-single" tabindex="-1">Single Orders</button>
-    <button role="tab" aria-selected="false" aria-controls="tab-woqty" id="tabBtn-woqty" tabindex="-1">Works Order Quantity</button>
-  </div>
-
-  <!-- 6 Pack Orders Tab -->
-  <section id="tab-6pack" class="tab-content active" role="tabpanel" aria-labelledby="tabBtn-6pack" tabindex="0">
+<div id="sixPack" class="tab-content active">
     <h2>6 Pack Order Calculator</h2>
-    <label for="layers">Number of Layers Completed:</label>
-    <input type="number" id="layers" min="0" value="0" />
+    <label>Layers:</label>
+    <input type="number" id="layers6" value="0">
+    <label>Trays:</label>
+    <input type="number" id="trays6" value="0">
+    <label>Loose 6 Packs:</label>
+    <input type="number" id="loose6" value="0">
+    <label>Previous Shift Trays:</label>
+    <input type="number" id="prevTrays6" value="0">
+    <button onclick="calculate6Pack()">Calculate</button>
 
-    <label for="ind6">Individual 6 Packs (Loose):</label>
-    <input type="number" id="ind6" min="0" value="0" />
+    <h3>Works Order Sheet</h3>
+    <table>
+        <tr><th>Trays</th><th>Loose 6 Packs</th><th>Bottles</th></tr>
+        <tr><td id="woTrays6"></td><td id="woLoose6"></td><td id="woBottles6"></td></tr>
+    </table>
 
-    <button id="calcBtn">Calculate</button>
+    <h3>Record Sheet</h3>
+    <table>
+        <tr><th>Trays</th><th>6 Packs</th><th>Bottles</th></tr>
+        <tr><td id="recTrays6"></td><td id="recSixPacks6"></td><td id="recBottles6"></td></tr>
+    </table>
+</div>
 
-    <div class="result-section">
-      <h3>Works Order Sheet</h3>
-      <p><strong>Total Trays:</strong> <span id="woTrays">—</span></p>
-      <p><strong>Total Loose 6 Packs:</strong> <span id="woLoose6packs">—</span></p>
-    </div>
+<div id="singles" class="tab-content">
+    <h2>Singles Order Calculator</h2>
+    <label>Layers:</label>
+    <input type="number" id="layersS" value="0">
+    <label>Trays:</label>
+    <input type="number" id="traysS" value="0">
+    <label>Loose Singles:</label>
+    <input type="number" id="looseS" value="0">
+    <label>Previous Shift Trays:</label>
+    <input type="number" id="prevTraysS" value="0">
+    <button onclick="calculateSingles()">Calculate</button>
 
-    <div class="result-section">
-      <h3>Record Sheet</h3>
-      <p><strong>Total Trays:</strong> <span id="recordTrays">—</span></p>
-      <p><strong>Total 6 Packs:</strong> <span id="record6packs">—</span></p>
-      <p><strong>Total Bottles:</strong> <span id="recordBottles">—</span></p>
-    </div>
-  </section>
+    <h3>Works Order Sheet</h3>
+    <table>
+        <tr><th>Trays</th><th>Loose Singles</th><th>Bottles</th></tr>
+        <tr><td id="woTraysS"></td><td id="woLooseS"></td><td id="woBottlesS"></td></tr>
+    </table>
 
-  <!-- Single Orders Tab -->
-  <section id="tab-single" class="tab-content" role="tabpanel" aria-labelledby="tabBtn-single" tabindex="0">
-    <h2>Single Order Calculator</h2>
-    <label for="layersS">Number of Layers Completed:</label>
-    <input type="number" id="layersS" min="0" value="0" />
+    <h3>Record Sheet</h3>
+    <table>
+        <tr><th>Trays</th><th>Bottles</th></tr>
+        <tr><td id="recTraysS"></td><td id="recBottlesS"></td></tr>
+    </table>
+</div>
 
-    <label for="indS">Individual Singles (Loose):</label>
-    <input type="number" id="indS" min="0" value="0" />
+<script>
+function openTab(evt, tabName) {
+    document.querySelectorAll(".tab-content").forEach(tc => tc.classList.remove("active"));
+    document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+    document.getElementById(tabName).classList.add("active");
+    evt.currentTarget.classList.add("active");
+}
 
-    <button id="calcSingleBtn">Calculate</button>
+function calculate6Pack() {
+    const layers = parseInt(document.getElementById('layers6').value) || 0;
+    const trays = parseInt(document.getElementById('trays6').value) || 0;
+    const loose6 = parseInt(document.getElementById('loose6').value) || 0;
+    const prevTrays = parseInt(document.getElementById('prevTrays6').value) || 0;
 
-    <div class="result-section">
-      <h3>Works Order Sheet</h3>
-      <p><strong>Total Trays:</strong> <span id="woTraysS">—</span></p>
-      <p><strong>Total Loose Singles:</strong> <span id="woLooseSingles">—</span></p>
-    </div>
+    const totalTrays = (layers * 7) + trays;
+    const totalSixPacks = totalTrays * 42;
+    const totalBottles = (totalSixPacks * 6);
 
-    <div class="result-section">
-      <h3>Record Sheet</h3>
-      <p><strong>Total Trays:</strong> <span id="recordTraysS">—</span></p>
-      <p><strong>Total Singles:</strong> <span id="recordSingles">—</span></p>
-      <p><strong>Total Bottles:</strong> <span id="recordBottlesS">—</span></p>
-    </div>
-  </section>
+    // Works order sheet - untouched
+    document.getElementById('woTrays6').innerText = totalTrays;
+    document.getElementById('woLoose6').innerText = loose6;
+    document.getElementById('woBottles6').innerText = (totalSixPacks + loose6) * 6;
 
-  <!-- Works Order Quantity Tab -->
-  <section id="tab-woqty" class="tab-content" role="tabpanel" aria-labelledby="tabBtn-woqty" tabindex="0">
-    <h2>Works Order Quantity</h2>
-    <label for="orderQty">Enter Order Quantity:</label>
-    <input type="number" id="orderQty" min="0" value="0" />
+    // Record sheet - deduct prev trays
+    const adjTrays = totalTrays - prevTrays;
+    const adjSixPacks = (adjTrays * 42) + loose6;
+    const adjBottles = adjSixPacks * 6;
 
-    <label for="orderType">Select Order Type:</label>
-    <select id="orderType">
-      <option value="6pack">6 Pack</option>
-      <option value="single">Single</option>
-    </select>
+    document.getElementById('recTrays6').innerText = adjTrays;
+    document.getElementById('recSixPacks6').innerText = adjSixPacks;
+    document.getElementById('recBottles6').innerText = adjBottles;
+}
 
-    <button id="calcWoQtyBtn">Calculate Trays Required</button>
+function calculateSingles() {
+    const layers = parseInt(document.getElementById('layersS').value) || 0;
+    const trays = parseInt(document.getElementById('traysS').value) || 0;
+    const looseS = parseInt(document.getElementById('looseS').value) || 0;
+    const prevTrays = parseInt(document.getElementById('prevTraysS').value) || 0;
 
-    <div class="result-section">
-      <h3>Trays Required</h3>
-      <p><strong>Total Trays:</strong> <span id="woTraysQty">—</span></p>
-    </div>
-  </section>
+    const totalTrays = (layers * 7) + trays;
+    const totalBottles = (totalTrays * 140) + looseS;
 
-  <script>
-    // --- TAB SWITCHING ---
-    const tabButtons = document.querySelectorAll('.tabs button');
-    const tabPanels = document.querySelectorAll('.tab-content');
+    // Works order sheet - untouched
+    document.getElementById('woTraysS').innerText = totalTrays;
+    document.getElementById('woLooseS').innerText = looseS;
+    document.getElementById('woBottlesS').innerText = totalBottles;
 
-    tabButtons.forEach((btn, i) => {
-      btn.addEventListener('click', () => {
-        tabButtons.forEach(b => {
-          b.classList.remove('active');
-          b.setAttribute('aria-selected', 'false');
-          b.setAttribute('tabindex', '-1');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-selected', 'true');
-        btn.setAttribute('tabindex', '0');
+    // Record sheet - deduct prev trays
+    const adjTrays = totalTrays - prevTrays;
+    const adjBottles = (adjTrays * 140) + looseS;
 
-        tabPanels.forEach(panel => panel.classList.remove('active'));
-        tabPanels[i].classList.add('active');
-        tabPanels[i].focus();
-      });
-    });
+    document.getElementById('recTraysS').innerText = adjTrays;
+    document.getElementById('recBottlesS').innerText = adjBottles;
+}
+</script>
 
-    // --- 6 PACK ORDER CALCULATION ---
-    document.getElementById('calcBtn').addEventListener('click', function() {
-      const layers = parseInt(document.getElementById('layers').value) || 0;
-      const individual6 = parseInt(document.getElementById('ind6').value) || 0;
-
-      const trays = layers * 7;
-      const total6Packs = trays * 42;
-      const totalBottles = total6Packs * 6;
-
-      document.getElementById('woTrays').textContent = trays.toLocaleString();
-      document.getElementById('woLoose6packs').textContent = individual6.toLocaleString();
-      document.getElementById('recordTrays').textContent = trays.toLocaleString();
-      document.getElementById('record6packs').textContent = total6Packs.toLocaleString();
-      document.getElementById('recordBottles').textContent = totalBottles.toLocaleString();
-    });
-
-    // --- SINGLE ORDER CALCULATION ---
-    document.getElementById('calcSingleBtn').addEventListener('click', function() {
-      const layersS = parseInt(document.getElementById('layersS').value) || 0;
-      const individualS = parseInt(document.getElementById('indS').value) || 0;
-
-      const traysS = layersS * 7;
-      const totalSingles = traysS * 140;
-      const totalBottlesS = totalSingles;
-
-      document.getElementById('woTraysS').textContent = traysS.toLocaleString();
-      document.getElementById('woLooseSingles').textContent = individualS.toLocaleString();
-      document.getElementById('recordTraysS').textContent = traysS.toLocaleString();
-      document.getElementById('recordSingles').textContent = totalSingles.toLocaleString();
-      document.getElementById('recordBottlesS').textContent = totalBottlesS.toLocaleString();
-    });
-
-    // --- WORKS ORDER QUANTITY CALCULATION ---
-    document.getElementById('calcWoQtyBtn').addEventListener('click', function() {
-      const orderQty = parseInt(document.getElementById('orderQty').value) || 0;
-      const orderType = document.getElementById('orderType').value;
-      let traysRequired;
-
-      if (orderType === '6pack') {
-        traysRequired = Math.ceil(orderQty / 42);  // 42 x 6-packs per tray
-      } else {
-        traysRequired = Math.ceil(orderQty / 140); // 140 singles per tray
-      }
-
-      document.getElementById('woTraysQty').textContent = traysRequired.toLocaleString();
-    });
-  </script>
 </body>
 </html>
