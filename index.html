@@ -113,8 +113,8 @@
 
     <h3>Works Order Sheet</h3>
     <table>
-        <tr><th>Trays</th><th>Loose Singles</th><th>Bottles</th></tr>
-        <tr><td id="woTraysS"></td><td id="woLooseS"></td><td id="woBottlesS"></td></tr>
+        <tr><th>Trays</th><th>Loose Singles</th></tr>
+        <tr><td id="woTraysS"></td><td id="woLooseS"></td></tr>
     </table>
 
     <h3>Record Sheet</h3>
@@ -142,10 +142,10 @@ function calculate6Pack() {
     const totalSixPacks = totalTrays * 42;
     const totalBottles = (totalSixPacks * 6);
 
-    // Works order sheet - untouched
+    // Works order sheet - untouched except no bottles shown
     document.getElementById('woTrays6').innerText = totalTrays;
     document.getElementById('woLoose6').innerText = loose6;
-    document.getElementById('woBottles6').innerText = (totalSixPacks + loose6) * 6;
+    // removed bottles line from works order sheet
 
     // Record sheet - deduct prev trays
     const adjTrays = totalTrays - prevTrays;
@@ -166,10 +166,10 @@ function calculateSingles() {
     const totalTrays = (layers * 7) + trays;
     const totalBottles = (totalTrays * 140) + looseS;
 
-    // Works order sheet - untouched
+    // Works order sheet - untouched except no bottles shown
     document.getElementById('woTraysS').innerText = totalTrays;
     document.getElementById('woLooseS').innerText = looseS;
-    document.getElementById('woBottlesS').innerText = totalBottles;
+    // removed bottles line from works order sheet
 
     // Record sheet - deduct prev trays
     const adjTrays = totalTrays - prevTrays;
