@@ -1,122 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#f90"> 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f90">
+<link rel="manifest" href="/manifest.json">
 <title>Production Calculator</title>
 <style>
   body, html {
     margin: 0;
+    padding: 0;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f90;
-    font-size: 10rem;
-    color: black;
-    font-family: sans-serif;
+    font-family: Arial, sans-serif;
+    background-color: #222;
+    color: #fff;
   }
-<body>
-  P
-</body>
-body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #222; color: #fff; }
-.tabs { display: flex; cursor: pointer; background-color: #333; }
-.tab { flex: 1; padding: 10px; text-align: center; border-bottom: 2px solid transparent; }
-.tab.active { border-bottom: 2px solid #f90; background-color: #444; }
-.tab-content { display: none; padding: 20px; }
-.tab-content.active { display: block; }
-label { display: block; margin-top: 10px; }
-input { padding: 5px; width: 100%; margin-top: 5px; }
-button { margin-top: 10px; padding: 10px; background-color: #f90; border: none; cursor: pointer; width: 100%; }
-table { width: 100%; margin-top: 20px; border-collapse: collapse; }
-th, td { border: 1px solid #555; padding: 8px; text-align: center; }
-th { background-color: #333; }
-.language-select { margin: 10px; padding: 5px; width: 200px; }
+
+  .language-select {
+    margin: 10px;
+    padding: 5px;
+    width: 200px;
+  }
+
+  .tabs { 
+    display: flex; 
+    cursor: pointer; 
+    background-color: #333; 
+  }
+  .tab { 
+    flex: 1; 
+    padding: 10px; 
+    text-align: center; 
+    border-bottom: 2px solid transparent; 
+  }
+  .tab.active { 
+    border-bottom: 2px solid #f90; 
+    background-color: #444; 
+  }
+  .tab-content { 
+    display: none; 
+    padding: 20px; 
+  }
+  .tab-content.active { 
+    display: block; 
+  }
+
+  label { 
+    display: block; 
+    margin-top: 10px; 
+  }
+  input { 
+    padding: 5px; 
+    width: 100%; 
+    margin-top: 5px; 
+  }
+  button { 
+    margin-top: 10px; 
+    padding: 10px; 
+    background-color: #f90; 
+    border: none; 
+    cursor: pointer; 
+    width: 100%; 
+  }
+
+  table { 
+    width: 100%; 
+    margin-top: 20px; 
+    border-collapse: collapse; 
+  }
+  th, td { 
+    border: 1px solid #555; 
+    padding: 8px; 
+    text-align: center; 
+  }
+  th { 
+    background-color: #333; 
+  }
 </style>
-    <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#f90">
 </head>
 <body>
 
 <div class="language-select">
-    <label for="language" id="langLabel">Language:</label>
-    <select id="language" onchange="setLanguage()">
-        <option value="en">English</option>
-        <option value="pl">Polish</option>
-        <option value="ro">Romanian</option>
-    </select>
+  <label for="language" id="langLabel">Language:</label>
+  <select id="language" onchange="setLanguage()">
+      <option value="en">English</option>
+      <option value="pl">Polish</option>
+      <option value="ro">Romanian</option>
+  </select>
 </div>
 
 <div class="tabs">
-    <div class="tab active" onclick="openTab(event, 'sixPack')" id="tabSixPack">6 Pack Order Calculator</div>
-    <div class="tab" onclick="openTab(event, 'singles')" id="tabSingles">Singles Order Calculator</div>
-    <div class="tab" onclick="openTab(event, 'guide')" id="tabGuide">Guide</div>
+  <div class="tab active" onclick="openTab(event, 'sixPack')" id="tabSixPack">6 Pack Order Calculator</div>
+  <div class="tab" onclick="openTab(event, 'singles')" id="tabSingles">Singles Order Calculator</div>
+  <div class="tab" onclick="openTab(event, 'guide')" id="tabGuide">Guide</div>
 </div>
 
 <!-- 6 Pack Calculator -->
 <div id="sixPack" class="tab-content active">
-    <h2 id="headingSixPack">6 Pack Order Calculator</h2>
-    <label id="labelLayers6">Layers:</label>
-    <input type="number" id="layers6" value="0">
-    <label id="labelTrays6">Individual trays that don't form a full layer:</label>
-    <input type="number" id="trays6" value="0">
-    <label id="labelLoose6">Loose 6 Packs:</label>
-    <input type="number" id="loose6" value="0">
-    <label id="labelPrev6">Previous Shift Trays (deducted):</label>
-    <input type="number" id="prevTrays6" value="0">
-    <button onclick="calculate6Pack()" id="btnCalc6">Calculate</button>
+  <h2 id="headingSixPack">6 Pack Order Calculator</h2>
+  <label id="labelLayers6">Layers:</label>
+  <input type="number" id="layers6" value="0">
+  <label id="labelTrays6">Individual trays that don't form a full layer:</label>
+  <input type="number" id="trays6" value="0">
+  <label id="labelLoose6">Loose 6 Packs:</label>
+  <input type="number" id="loose6" value="0">
+  <label id="labelPrev6">Previous Shift Trays (deducted):</label>
+  <input type="number" id="prevTrays6" value="0">
+  <button onclick="calculate6Pack()" id="btnCalc6">Calculate</button>
 
-    <h3 id="woHeading6">Works Order Sheet</h3>
-    <table>
-        <tr><th id="thTrays6">Trays</th><th id="thLoose6">Loose 6 Packs</th></tr>
-        <tr><td id="woTrays6"></td><td id="woLoose6"></td></tr>
-    </table>
+  <h3 id="woHeading6">Works Order Sheet</h3>
+  <table>
+      <tr><th id="thTrays6">Trays</th><th id="thLoose6">Loose 6 Packs</th></tr>
+      <tr><td id="woTrays6"></td><td id="woLoose6"></td></tr>
+  </table>
 
-    <h3 id="recHeading6">Record Sheet</h3>
-    <table>
-        <tr><th id="thRecTrays6">Trays</th><th id="thRecSix6">6 Packs</th><th id="thRecBottles6">Bottles</th></tr>
-        <tr><td id="recTrays6"></td><td id="recSixPacks6"></td><td id="recBottles6"></td></tr>
-    </table>
+  <h3 id="recHeading6">Record Sheet</h3>
+  <table>
+      <tr><th id="thRecTrays6">Trays</th><th id="thRecSix6">6 Packs</th><th id="thRecBottles6">Bottles</th></tr>
+      <tr><td id="recTrays6"></td><td id="recSixPacks6"></td><td id="recBottles6"></td></tr>
+  </table>
 </div>
 
 <!-- Singles Calculator -->
 <div id="singles" class="tab-content">
-    <h2 id="headingSingles">Singles Order Calculator</h2>
-    <label id="labelLayersS">Layers:</label>
-    <input type="number" id="layersS" value="0">
-    <label id="labelTraysS">Trays:</label>
-    <input type="number" id="traysS" value="0">
-    <label id="labelLooseS">Loose Singles:</label>
-    <input type="number" id="looseS" value="0">
-    <label id="labelPrevS">Previous Shift Trays (deducted):</label>
-    <input type="number" id="prevTraysS" value="0">
-    <button onclick="calculateSingles()" id="btnCalcS">Calculate</button>
+  <h2 id="headingSingles">Singles Order Calculator</h2>
+  <label id="labelLayersS">Layers:</label>
+  <input type="number" id="layersS" value="0">
+  <label id="labelTraysS">Trays:</label>
+  <input type="number" id="traysS" value="0">
+  <label id="labelLooseS">Loose Singles:</label>
+  <input type="number" id="looseS" value="0">
+  <label id="labelPrevS">Previous Shift Trays (deducted):</label>
+  <input type="number" id="prevTraysS" value="0">
+  <button onclick="calculateSingles()" id="btnCalcS">Calculate</button>
 
-    <h3 id="woHeadingS">Works Order Sheet</h3>
-    <table>
-        <tr><th id="thTraysS">Trays</th><th id="thLooseS">Loose Singles</th></tr>
-        <tr><td id="woTraysS"></td><td id="woLooseS"></td></tr>
-    </table>
+  <h3 id="woHeadingS">Works Order Sheet</h3>
+  <table>
+      <tr><th id="thTraysS">Trays</th><th id="thLooseS">Loose Singles</th></tr>
+      <tr><td id="woTraysS"></td><td id="woLooseS"></td></tr>
+  </table>
 
-    <h3 id="recHeadingS">Record Sheet</h3>
-    <table>
-        <tr><th id="thRecTraysS">Trays</th><th id="thRecBottlesS">Bottles</th></tr>
-        <tr><td id="recTraysS"></td><td id="recBottlesS"></td></tr>
-    </table>
+  <h3 id="recHeadingS">Record Sheet</h3>
+  <table>
+      <tr><th id="thRecTraysS">Trays</th><th id="thRecBottlesS">Bottles</th></tr>
+      <tr><td id="recTraysS"></td><td id="recBottlesS"></td></tr>
+  </table>
 </div>
 
 <!-- Guide Tab -->
 <div id="guide" class="tab-content">
-    <h2 id="headingGuide">Production Calculator Guide</h2>
-    <p id="guideText">This calculator helps you correctly calculate the number of trays, 6 packs, singles, and bottles for your production order sheet and record sheet.</p>
-    <ul id="guideList">
-        <li>Enter the number of layers, individual trays, and loose 6 packs or singles.</li>
-        <li>Enter the previous shift trays if carrying over from the last order.</li>
-        <li>Click "Calculate" to get the updated numbers for the Works Order Sheet.</li>
-        <li>Record Sheet numbers are adjusted automatically for previous shift trays.</li>
-    </ul>
+  <h2 id="headingGuide">Production Calculator Guide</h2>
+  <p id="guideText">This calculator helps you correctly calculate the number of trays, 6 packs, singles, and bottles for your production order sheet and record sheet.</p>
+  <ul id="guideList">
+      <li>Enter the number of layers, individual trays, and loose 6 packs or singles.</li>
+      <li>Enter the previous shift trays if carrying over from the last order.</li>
+      <li>Click "Calculate" to get the updated numbers for the Works Order Sheet.</li>
+      <li>Record Sheet numbers are adjusted automatically for previous shift trays.</li>
+  </ul>
 </div>
 
 <script>
@@ -159,179 +199,63 @@ function calculateSingles() {
     const prevTrays = parseInt(document.getElementById('prevTraysS').value) || 0;
 
     const totalTrays = (layers * 7) + trays;
-    const totalBottles = (totalTrays * 140) + looseS;
+    const totalBottles = totalTrays * 42 + looseS;
 
     document.getElementById('woTraysS').innerText = totalTrays;
     document.getElementById('woLooseS').innerText = looseS;
 
     const adjTrays = totalTrays - prevTrays;
-    const adjBottles = (adjTrays * 140) + looseS;
+    const adjBottles = (adjTrays * 42) + looseS;
 
     document.getElementById('recTraysS').innerText = adjTrays;
     document.getElementById('recBottlesS').innerText = adjBottles;
 }
 
-// Language translations
-const translations = {
-    en: {
-        langLabel: "Language:",
-        tabSixPack: "6 Pack Order Calculator",
-        tabSingles: "Singles Order Calculator",
-        tabGuide: "Guide",
-        headingSixPack: "6 Pack Order Calculator",
-        labelLayers6: "Layers:",
-        labelTrays6: "Individual trays that don't form a full layer:",
-        labelLoose6: "Loose 6 Packs:",
-        labelPrev6: "Previous Shift Trays (deducted):",
-        btnCalc6: "Calculate",
-        woHeading6: "Works Order Sheet",
-        thTrays6: "Trays",
-        thLoose6: "Loose 6 Packs",
-        recHeading6: "Record Sheet",
-        thRecTrays6: "Trays",
-        thRecSix6: "6 Packs",
-        thRecBottles6: "Bottles",
-        headingSingles: "Singles Order Calculator",
-        labelLayersS: "Layers:",
-        labelTraysS: "Trays:",
-        labelLooseS: "Loose Singles:",
-        labelPrevS: "Previous Shift Trays (deducted):",
-        btnCalcS: "Calculate",
-        woHeadingS: "Works Order Sheet",
-        thTraysS: "Trays",
-        thLooseS: "Loose Singles",
-        recHeadingS: "Record Sheet",
-        thRecTraysS: "Trays",
-        thRecBottlesS: "Bottles",
-        headingGuide: "Production Calculator Guide",
-        guideText: "This calculator helps you correctly calculate the number of trays, 6 packs, singles, and bottles for your production order sheet and record sheet.",
-        guideList: [
-            "Enter the number of layers, individual trays, and loose 6 packs or singles.",
-            "Enter the previous shift trays if carrying over from the last order.",
-            "Click \"Calculate\" to get the updated numbers for the Works Order Sheet.",
-            "Record Sheet numbers are adjusted automatically for previous shift trays."
-        ]
-    },
-    pl: {
-        langLabel: "Język:",
-        tabSixPack: "Kalkulator zamówień 6-paków",
-        tabSingles: "Kalkulator zamówień pojedynczych",
-        tabGuide: "Przewodnik",
-        headingSixPack: "Kalkulator zamówień 6-paków",
-        labelLayers6: "Warstwy:",
-        labelTrays6: "Indywidualne tacki, które nie tworzą pełnej warstwy:",
-        labelLoose6: "Luźne 6-*****:",
-        labelPrev6: "Tacki z poprzedniej zmiany (odliczone):",
-        btnCalc6: "Oblicz",
-        woHeading6: "Arkusz zleceń",
-        thTrays6: "Tacki",
-        thLoose6: "Luźne 6-*****",
-        recHeading6: "Arkusz rejestracyjny",
-        thRecTrays6: "Tacki",
-        thRecSix6: "6-*****",
-        thRecBottles6: "Butelki",
-        headingSingles: "Kalkulator zamówień pojedynczych",
-        labelLayersS: "Warstwy:",
-        labelTraysS: "Tacki:",
-        labelLooseS: "Luźne pojedyncze:",
-        labelPrevS: "Tacki z poprzedniej zmiany (odliczone):",
-        btnCalcS: "Oblicz",
-        woHeadingS: "Arkusz zleceń",
-        thTraysS: "Tacki",
-        thLooseS: "Luźne pojedyncze",
-        recHeadingS: "Arkusz rejestracyjny",
-        thRecTraysS: "Tacki",
-        thRecBottlesS: "Butelki",
-        headingGuide: "Przewodnik kalkulatora produkcji",
-        guideText: "Ten kalkulator pomaga prawidłowo obliczyć liczbę tac, 6-paków, pojedynczych i butelek dla arkusza zamówień i arkusza rejestracyjnego.",
-        guideList: [
-            "Wprowadź liczbę warstw, indywidualnych tac i luźnych 6-paków lub pojedynczych.",
-            "Wprowadź tacki z poprzedniej zmiany, jeśli są przenoszone z poprzedniego zamówienia.",
-            "Kliknij \"Oblicz\", aby uzyskać zaktualizowane liczby w arkuszu zleceń.",
-            "Liczby w arkuszu rejestracyjnym są automatycznie korygowane o tacki z poprzedniej zmiany."
-        ]
-    },
-    ro: {
-        langLabel: "Limba:",
-        tabSixPack: "Calculator comenzi 6-pack",
-        tabSingles: "Calculator comenzi individuale",
-        tabGuide: "Ghid",
-        headingSixPack: "Calculator comenzi 6-pack",
-        labelLayers6: "Straturi:",
-        labelTrays6: "Tăvi individuale care nu formează un strat complet:",
-        labelLoose6: "6-pack-uri libere:",
-        labelPrev6: "Tăvi din schimbul anterior (deduse):",
-        btnCalc6: "Calculează",
-        woHeading6: "Fișă de comandă",
-        thTrays6: "Tăvi",
-        thLoose6: "6-pack-uri libere",
-        recHeading6: "Fișă de înregistrare",
-        thRecTrays6: "Tăvi",
-        thRecSix6: "6-pack-uri",
-        thRecBottles6: "Sticle",
-        headingSingles: "Calculator comenzi individuale",
-        labelLayersS: "Straturi:",
-        labelTraysS: "Tăvi:",
-        labelLooseS: "Individuale libere:",
-        labelPrevS: "Tăvi din schimbul anterior (deduse):",
-        btnCalcS: "Calculează",
-        woHeadingS: "Fișă de comandă",
-        thTraysS: "Tăvi",
-        thLooseS: "Individuale libere",
-        recHeadingS: "Fișă de înregistrare",
-        thRecTraysS: "Tăvi",
-        thRecBottlesS: "Sticle",
-        headingGuide: "Ghid calculator producție",
-        guideText: "Acest calculator vă ajută să calculați corect numărul de tăvi, 6-pack-uri, individuale și sticle pentru fișa de comandă și fișa de înregistrare.",
-        guideList: [
-            "Introduceți numărul de straturi, tăvi individuale și 6-pack-uri sau individuale libere.",
-            "Introduceți tăvile din schimbul anterior dacă se transferă de la comanda anterioară.",
-            "Faceți clic pe \"Calculează\" pentru a obține numerele actualizate pentru Fișa de comandă.",
-            "Numerele din Fișa de înregistrare sunt ajustate automat pentru tăvile din schimbul anterior."
-        ]
-    }
-};
-
+// Language selection
 function setLanguage() {
-    const lang = document.getElementById("language").value;
-    const t = translations[lang];
+    const lang = document.getElementById('language').value;
+    const translations = {
+        en: {
+            tabSixPack: "6 Pack Order Calculator",
+            tabSingles: "Singles Order Calculator",
+            tabGuide: "Guide",
+            headingSixPack: "6 Pack Order Calculator",
+            labelLayers6: "Layers:",
+            labelTrays6: "Individual trays that don't form a full layer:",
+            labelLoose6: "Loose 6 Packs:",
+            labelPrev6: "Previous Shift Trays (deducted):",
+            btnCalc6: "Calculate",
+            woHeading6: "Works Order Sheet",
+            thTrays6: "Trays",
+            thLoose6: "Loose 6 Packs",
+            recHeading6: "Record Sheet",
+            thRecTrays6: "Trays",
+            thRecSix6: "6 Packs",
+            thRecBottles6: "Bottles",
+            headingSingles: "Singles Order Calculator",
+            labelLayersS: "Layers:",
+            labelTraysS: "Trays:",
+            labelLooseS: "Loose Singles:",
+            labelPrevS: "Previous Shift Trays (deducted):",
+            btnCalcS: "Calculate",
+            woHeadingS: "Works Order Sheet",
+            thTraysS: "Trays",
+            thLooseS: "Loose Singles",
+            recHeadingS: "Record Sheet",
+            thRecTraysS: "Trays",
+            thRecBottlesS: "Bottles",
+            headingGuide: "Production Calculator Guide",
+            guideText: "This calculator helps you correctly calculate the number of trays, 6 packs, singles, and bottles for your production order sheet and record sheet.",
+        }
+        // Add Polish (pl) and Romanian (ro) here if needed
+    };
 
-    // Tabs
-    document.getElementById("tabSixPack").innerText = t.tabSixPack;
-    document.getElementById("tabSingles").innerText = t.tabSingles;
-    document.getElementById("tabGuide").innerText = t.tabGuide;
-
-    // Labels & headings
-    for (let key in t) {
-        const el = document.getElementById(key);
-        if (el) {
-            if (Array.isArray(t[key])) {
-                // for list items
-                const list = el;
-                list.innerHTML = "";
-                t[key].forEach(item => {
-                    const li = document.createElement("li");
-                    li.innerText = item;
-                    list.appendChild(li);
-                });
-            } else {
-                el.innerText = t[key]; 
-}
-            }
+    const t = translations[lang] || translations.en;
+    for (const id in t) {
+        if (document.getElementById(id)) {
+            document.getElementById(id).innerText = t[id];
         }
     }
-}
-</script>
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-        .then(registration => {
-            console.log('Service Worker registered with scope:', registration.scope);
-        })
-        .catch(error => {
-            console.log('Service Worker registration failed:', error);
-        });
-}
 }
 </script>
 </body>
