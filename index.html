@@ -299,7 +299,14 @@ function setLanguage() {
                     list.appendChild(li);
                 });
             } else {
-                el.innerText = t[key];
+                el.innerText = t[key]; 
+                if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(reg => console.log('Service Worker registered:', reg))
+      .catch(err => console.log('Service Worker registration failed:', err));
+  });
+}
             }
         }
     }
