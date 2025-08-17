@@ -5,42 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Production Calculator</title>
 <style>
-    /* Checklist specific styling */
-#checklist {
-    background-color: #222;
-    color: #f0f0f0;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-#checklistItems {
-    list-style: none;
-    padding-left: 0;
-}
-
-#checklistItems li {
-    margin: 10px 0;
-    font-size: 16px;
-}
-
-#checklistItems input[type="checkbox"] {
-    margin-right: 10px;
-    transform: scale(1.2);
-}
-
-#btnClearChecklist {
-    margin-top: 15px;
-    padding: 10px 20px;
-    background-color: #f90;
-    color: #222;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-#btnClearChecklist:hover {
-    background-color: #fb0;
-}
 body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #222; color: #fff; }
 .tabs { display: flex; cursor: pointer; background-color: #333; }
 .tab { flex: 1; padding: 10px; text-align: center; border-bottom: 2px solid transparent; }
@@ -59,28 +23,7 @@ th { background-color: #333; }
 <meta name="theme-color" content="#f90">
 </head>
 <body>
-<div class="tabs">
-    <div class="tab active" onclick="openTab(event, 'sixPack')" id="tabSixPack">6 Pack Order Calculator</div>
-    <div class="tab" onclick="openTab(event, 'singles')" id="tabSingles">Singles Order Calculator</div>
-    <div class="tab" onclick="openTab(event, 'guide')" id="tabGuide">Guide</div>
-</div>
 
-<!-- Checklist Tab Content -->
-<div id="checklist" class="tab-content active">
-    <h2 id="headingChecklist">Production Checklist</h2>
-    <p id="checklistText">Use this checklist to track tasks for your production order.</p>
-    
-    <ul id="checklistItems">
-        <li><input type="checkbox" id="task1"> <label for="task1">Verify materials availability</label></li>
-        <li><input type="checkbox" id="task2"> <label for="task2">Prepare 6 pack trays</label></li>
-        <li><input type="checkbox" id="task3"> <label for="task3">Prepare singles trays</label></li>
-        <li><input type="checkbox" id="task4"> <label for="task4">Check machine settings</label></li>
-        <li><input type="checkbox" id="task5"> <label for="task5">Update production log</label></li>
-    </ul>
-
-    <button onclick="clearChecklist()" id="btnClearChecklist">Clear All</button>
-</div>
-    
 <div class="language-select">
     <label for="language" id="langLabel">Language:</label>
     <select id="language" onchange="setLanguage()">
@@ -88,6 +31,12 @@ th { background-color: #333; }
         <option value="pl">Polish</option>
         <option value="ro">Romanian</option>
     </select>
+</div>
+
+<div class="tabs">
+    <div class="tab active" onclick="openTab(event, 'sixPack')" id="tabSixPack">6 Pack Order Calculator</div>
+    <div class="tab" onclick="openTab(event, 'singles')" id="tabSingles">Singles Order Calculator</div>
+    <div class="tab" onclick="openTab(event, 'guide')" id="tabGuide">Guide</div>
 </div>
 
 <!-- 6 Pack Calculator -->
@@ -155,9 +104,6 @@ th { background-color: #333; }
 </div>
 
 <script>
-    function clearChecklist() {
-    document.querySelectorAll('#checklistItems input[type="checkbox"]').forEach(cb => cb.checked = false);
-}
 // Tabs
 function openTab(evt, tabName) {
     document.querySelectorAll(".tab-content").forEach(tc => tc.classList.remove("active"));
@@ -369,21 +315,5 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
-    // Clear all checklist items
-function clearChecklist() {
-    document.querySelectorAll('#checklistItems input[type="checkbox"]').forEach(cb => cb.checked = false);
-}
-
-// Make the tab function work if you use the same tab system
-function openTab(evt, tabName) {
-    const tabContents = document.querySelectorAll('.tab-content');
-    tabContents.forEach(tc => tc.style.display = 'none');
-
-    const tabButtons = document.querySelectorAll('.tab');
-    tabButtons.forEach(tb => tb.classList.remove('active'));
-
-    document.getElementById(tabName).style.display = 'block';
-    evt.currentTarget.classList.add('active');
-}
 </body>
 </html>
