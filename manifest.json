@@ -1,0 +1,21 @@
+{
+  "name": "Production Calculator",
+  "short_name": "ProdCalc",
+  "description": "Calculate 6 pack and singles production orders easily.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#222222",
+  "theme_color": "#f90",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
