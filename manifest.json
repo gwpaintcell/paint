@@ -1,8 +1,20 @@
 {
-  "name": "Production Calculator",
-  "short_name": "ProdCalc",
+  "name": "My Calculator",
+  "short_name": "Calc",
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#f90",
-  "theme_color": "#f90"
+  "background_color": "#ffffff",
+  "theme_color": "#f90",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
